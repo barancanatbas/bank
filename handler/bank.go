@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"log"
 	"mongoexample/models"
 	"mongoexample/repository"
 	"mongoexample/request"
@@ -39,16 +38,12 @@ func (h handlerBank) Create(c *gin.Context) {
 		return
 	}
 
-	// account := models.Account{
-	// 	Name:    "deneme",
-	// 	Balance: 10,
-	// 	Status:  true,
-	// }
-
 	err := h.Repo.Create(req)
 	if err != nil {
-		log.Fatal(err)
+		c.JSON(http.StatusOK, gin.H{"message": err.Error()})
+		return
 	}
+	c.JSON(http.StatusOK, gin.H{"message": "ok"})
 }
 
 func (h handlerBank) Info(c *gin.Context) {
